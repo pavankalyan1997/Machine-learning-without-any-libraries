@@ -13,12 +13,32 @@ class Kmeans:
         self.Centroids=np.array([]).reshape(self.X.shape[1],0)
         self.K=K
         self.m=self.X.shape[0]
+        
+    def kmeanspp(self,X,K):
+        i=rd.randint(0,X.shape[0])
+        Centroid_temp=np.array([X[i]])
+        for k in range(1,K):
+            D=np.array([]) 
+            for x in X:
+                D=np.append(D,np.min(np.sum((x-Centroid_temp)**2)))
+            prob=D/np.sum(D)
+            cummulative_prob=np.cumsum(prob)
+            r=rd.random()
+            i=0
+            for j,p in enumerate(cummulative_prob):
+                if r<p:
+                    i=j
+                    break
+            Centroid_temp=np.append(Centroid_temp,[X[i]],axis=0)
+        return Centroid_temp.T
     
     def fit(self,n_iter):
         #randomly Initialize the centroids
-        for i in range(self.K):
+        self.Centroids=self.kmeanspp(self.X,self.K)
+        
+        """for i in range(self.K):
             rand=rd.randint(0,self.m-1)
-            self.Centroids=np.c_[self.Centroids,self.X[rand]]
+            self.Centroids=np.c_[self.Centroids,self.X[rand]]"""
         
         #compute euclidian distances and assign clusters
         for n in range(n_iter):

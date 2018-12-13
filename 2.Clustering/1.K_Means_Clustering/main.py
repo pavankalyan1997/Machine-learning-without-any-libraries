@@ -54,6 +54,13 @@ for n in range(num_iter):
         
     Output=Y
 
+plt.scatter(X[:,0],X[:,1],c='black',label='unclustered data')
+plt.xlabel('Income')
+plt.ylabel('Number of transactions')
+plt.legend()
+plt.title('Plot of data points')
+plt.show()
+
 color=['red','blue','green','cyan','magenta']
 labels=['cluster1','cluster2','cluster3','cluster4','cluster5']
 for k in range(K):
